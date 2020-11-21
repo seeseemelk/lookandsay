@@ -4,85 +4,82 @@ import std.stdio;
 import std.range;
 import std.algorithm;
 import std.conv;
+import std.meta;
 
-//enum n = 100;
-enum n = 90;
+enum n = 100;
+//enum n = 90;
+//enum n = 70;
+//enum n = 10;
 
-auto lookAndSay(Range)(Range input) @nogc
+auto lookAndSay(Range)(Range input)
 if (isInputRange!Range)
 {
-    final struct LookAndSay
+    static struct LookAndSay
     {
         Range input;
-        int count = 0;
-        dchar chr;
-		bool step = false;
+        int outputChr = 1;
+		dchar count;
+		dchar chr;
+		alias front = count;
+		bool empty = false;
+
+		this(Range input)
+		{
+			this.input = input;
+			popFront();
+		}
 
         void popFront()
         {
-			if (step == false)
+			if (outputChr == 0)
+			{
+				outputChr = 1;
+				front = chr;
+			}
+			else
 			{
 				if (input.empty)
 				{
 					empty = true;
+					return;
 				}
-				else
+
+				count = '1';
+				chr = input.front;
+				input.popFront();
+
+				while (!input.empty && input.front == chr)
 				{
-					count = 1;
-					chr = input.front;
+					count++;
 					input.popFront();
-
-					while (!input.empty && input.front == chr)
-					{
-						count++;
-						input.popFront();
-					}
 				}
-				step = true;
-			}
-			else
-			{
-				step = false;
+				outputChr = 0;
 			}
         }
-
-        dchar front()
-        {
-            if (count == 0)
-            {
-                popFront();
-            }
-			if (step)
-				return cast(dchar) ('0' + count);
-			else
-				return chr;
-        }
-
-        bool empty = false;
     }
 	return LookAndSay(input);
 }
 static assert(isInputRange!(typeof(lookAndSay("1"))));
 
-auto lookAndSayMultiple(int n, Range)(Range input) @nogc
+auto lookAndSayMultiple(int n, Range)(Range input)
 if (n == 1)
 {
     return lookAndSay(input);
 }
 
-auto lookAndSayMultiple(int n, Range)(Range input) @nogc
+auto lookAndSayMultiple(int n, Range)(Range input)
 if (n > 1)
 {
     return lookAndSayMultiple!(n - 1)(lookAndSay(input));
 }
 
-auto lookAndSayNth(int n)() @nogc
+auto lookAndSayNth(int n)()
 if (n > 1)
 {
 	return lookAndSayMultiple!(n - 1)("1");
 }
 
-auto lookAndSayNth(int n)() @nogc
+auto lookAndSayNth(int n)()
 if (n == 1)
 {
 	return "1";
