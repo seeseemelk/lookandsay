@@ -5,9 +5,10 @@ import std.range;
 import std.algorithm;
 import std.conv;
 
-enum n = 100;
+//enum n = 100;
+enum n = 90;
 
-auto lookAndSay(Range)(Range input)
+auto lookAndSay(Range)(Range input) @nogc
 if (isInputRange!Range)
 {
     final struct LookAndSay
@@ -56,32 +57,32 @@ if (isInputRange!Range)
 			else
 				return chr;
         }
-        
+
         bool empty = false;
     }
 	return LookAndSay(input);
 }
 static assert(isInputRange!(typeof(lookAndSay("1"))));
 
-auto lookAndSayMultiple(int n, Range)(Range input)
+auto lookAndSayMultiple(int n, Range)(Range input) @nogc
 if (n == 1)
 {
     return lookAndSay(input);
 }
 
-auto lookAndSayMultiple(int n, Range)(Range input)
+auto lookAndSayMultiple(int n, Range)(Range input) @nogc
 if (n > 1)
 {
     return lookAndSayMultiple!(n - 1)(lookAndSay(input));
 }
 
-auto lookAndSayNth(int n)()
+auto lookAndSayNth(int n)() @nogc
 if (n > 1)
 {
 	return lookAndSayMultiple!(n - 1)("1");
 }
 
-auto lookAndSayNth(int n)()
+auto lookAndSayNth(int n)() @nogc
 if (n == 1)
 {
 	return "1";
@@ -91,9 +92,11 @@ version (unittest) {} else
 {
 	void main(string[] args)
 	{
-		//import std.conv : to;
-		//int n = args[1].to!int;
-		writeln(lookAndSayNth!n);
+		//writeln(lookAndSayNth!n);
+		foreach (chr; lookAndSayNth!n)
+		{
+			stdout.rawWrite([chr]);
+		}
 	}
 }
 
