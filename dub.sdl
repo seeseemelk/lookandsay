@@ -1,0 +1,6 @@
+name "lookandsay"
+description "A generator for look and say numbers."
+authors "seeseemelk"
+copyright "Copyright © 2020, seeseemelk"
+license "GPLv3"
+targetType "executable"
