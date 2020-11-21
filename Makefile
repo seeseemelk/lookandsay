@@ -1,5 +1,8 @@
-lookandsay: source/lookandsay.d
-	dub build --compiler=ldc --build=release-nobounds
+SRC := $(shell find source -type f) Makefile dub.sdl
 
-benchmark: lookandsay
-	./lookandsay | pv | sha256sum
+lookandsay.benchmark: $(SRC)
+	dub build --compiler=ldc --build=release-nobounds
+	cp --reflink=never -f lookandsay lookandsay.benchmark
+
+benchmark: lookandsay.benchmark
+	./$< | pv | sha256sum
