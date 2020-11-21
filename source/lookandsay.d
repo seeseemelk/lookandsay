@@ -10,6 +10,7 @@ enum n = 100;
 //enum n = 90;
 //enum n = 70;
 //enum n = 10;
+//enum n = 50;
 
 auto lookAndSay(Range)(Range input)
 if (isInputRange!Range)
@@ -89,11 +90,13 @@ version (unittest) {} else
 {
 	void main(string[] args)
 	{
-		//writeln(lookAndSayNth!n);
+		import core.stdc.stdio : putc;
+		auto fp = stdout.getFP();
 		foreach (chr; lookAndSayNth!n)
 		{
-			stdout.rawWrite([chr]);
+			putc(chr, fp);
 		}
+		putc('\n', fp);
 	}
 }
 
