@@ -15,4 +15,7 @@ dlang-test-*
 *.a
 *.lst
 output
-lookandsay
+lookandsay*
+*.patch
+*.def
+*.log
