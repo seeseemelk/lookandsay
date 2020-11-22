@@ -1,16 +1,12 @@
-module lookandsay;
+/**
+A simple implementation of a look and say number generator.
+*/
+module simple;
 
-import std.stdio;
 import std.range;
 import std.algorithm;
 import std.conv;
 import std.meta;
-
-enum n = 100;
-//enum n = 90;
-//enum n = 70;
-//enum n = 10;
-//enum n = 50;
 
 auto lookAndSay(Range)(Range input)
 if (isInputRange!Range)
@@ -84,20 +80,6 @@ auto lookAndSayNth(int n)()
 if (n == 1)
 {
 	return "1";
-}
-
-version (unittest) {} else
-{
-	void main(string[] args)
-	{
-		import core.stdc.stdio : putc;
-		auto fp = stdout.getFP();
-		foreach (chr; lookAndSayNth!n)
-		{
-			putc(chr, fp);
-		}
-		putc('\n', fp);
-	}
 }
 
 unittest
