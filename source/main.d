@@ -2,11 +2,11 @@
 import atoms;
 import std.stdio;
 
-//enum n = 100;
+enum n = 100;
 //enum n = 90;
 //enum n = 70;
 //enum n = 1;
-enum n = 100;
+//enum n = 50;
 
 void main(string[] args)
 {
