@@ -5,4 +5,4 @@ lookandsay.benchmark: $(SRC)
 	cp --reflink=never -f lookandsay lookandsay.benchmark
 
 benchmark: lookandsay.benchmark
-	./$< | pv | sha256sum
+	./$< | pv -btap | sha256sum

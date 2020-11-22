@@ -17,7 +17,7 @@ immutable string[] base = [
 private struct Atom
 {
 	string str;
-	size_t[] decay;
+	ubyte[] decay;
 }
 
 immutable Atom[] atoms = [
@@ -122,8 +122,8 @@ private auto lookAndSay(Range)(Range input)
 	static struct LookAndSay
 	{
 		Range input;
-		const(size_t)[] series;
-		immutable(Atom)* front;
+		const(ubyte)[] series;
+		ubyte front;
 		bool empty = false;
 
 		this(Range input)
@@ -141,10 +141,10 @@ private auto lookAndSay(Range)(Range input)
 					empty = true;
 					return;
 				}
-				series = input.front.decay;
+				series = atoms[input.front].decay;
 				input.popFront();
 			}
-			front = &atoms[series[0]];
+			front = series[0];
 			series = series[1 .. $];
 		}
 	}
@@ -188,7 +188,7 @@ auto asString(Range)(Range input)
 private auto lookAndSayAtoms(int n)()
 if ((n - 1) == base.length)
 {
-	return [atoms[24], atoms[39]];
+	return [24, 39];
 }
 
 private auto lookAndSayAtoms(int n)()
@@ -213,7 +213,7 @@ auto lookAndSayPrint(int n)(FILE* fp)
 {
 	foreach (atom; lookAndSayAtoms!n)
 	{
-		foreach (chr; atom.str)
+		foreach (chr; atoms[atom].str)
 			putc(chr, fp);
 	}
 }
