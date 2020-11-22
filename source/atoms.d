@@ -2,6 +2,7 @@ module atoms;
 
 import std.stdio;
 import std.range;
+import core.stdc.stdio : putc, FILE;
 
 immutable string[] base = [
 	"1",
@@ -206,6 +207,15 @@ auto lookAndSayNth(int n)()
 if ((n - 1) >= base.length)
 {
 	return asString(lookAndSayAtoms!n);
+}
+
+auto lookAndSayPrint(int n)(FILE* fp)
+{
+	foreach (atom; lookAndSayAtoms!n)
+	{
+		foreach (chr; atom.str)
+			putc(chr, fp);
+	}
 }
 
 unittest

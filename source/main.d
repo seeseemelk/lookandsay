@@ -12,10 +12,12 @@ void main(string[] args)
 {
 	import core.stdc.stdio : putc;
 	auto fp = stdout.getFP();
+	/*
 	foreach (chr; lookAndSayNth!n)
 	{
 		putc(chr, fp);
-	}
+	}*/
+	lookAndSayPrint!n(fp);
 	putc('\n', fp);
 	/*
 	static foreach (int n; 1..20)
